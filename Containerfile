@@ -7,14 +7,20 @@ RUN chown -R ${USER_UID}:0 /app
 USER ${USER_UID}
 
 COPY ./requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+
+COPY ./ansible.cfg /opt/app-root/src/.ansible.cfg
+COPY requirements.yml /tmp/requirements.yml
+RUN ansible-galaxy collection install -vv -r /tmp/requirements.yml --collections-path "/usr/share/ansible/collections"
+RUN rm /opt/app-root/src/.ansible.cfg
+RUN rm -rf /opt/app-root/src/.ansible
 
 ENV BASE_DIR="/runner/repo"
 
 # Copy ansible plugins
 RUN mkdir -p /usr/share/ansible/plugins/action/
 COPY ./ansible-plugins /usr/share/ansible/plugins/
-
 
 # Copy the entrypoint script into the container
 COPY ./entrypoint.sh /entrypoint.sh
