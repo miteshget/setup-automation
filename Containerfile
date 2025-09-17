@@ -14,7 +14,7 @@ ENV BASE_DIR="/runner/repo"
 # Copy ansible plugins
 RUN mkdir -p /usr/share/ansible/plugins/action/
 COPY ./ansible-plugins /usr/share/ansible/plugins/
-COPY ./api /app/
+
 
 # Copy the entrypoint script into the container
 COPY ./entrypoint.sh /entrypoint.sh
