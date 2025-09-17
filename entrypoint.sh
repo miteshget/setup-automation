@@ -19,4 +19,4 @@ if [[ -n "${VAULT_PASSWORD}" ]]; then
 echo ${VAULT_PASSWORD} > /tmp/.vault
 export ANSIBLE_VAULT_PASSWORD_FILE=/tmp/.vault
 fi
-ansible-playbook main.yml
+ansible-playbook setup.yml
